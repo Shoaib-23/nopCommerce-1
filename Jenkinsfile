@@ -9,8 +9,8 @@ pipeline {
         }    
         stage('build and push the image') {    
             steps {        
-                    sh 'docker image build -t shoaib23/nopCommerce:latest .'
-                    sh 'docker image push shoaib23/nopCommerce:latest'
+                    sh 'docker image build -t shoaib23/nopcommerce:new .'
+                    sh 'docker image push shoaib23/nopcommerce:new'
             }
         }
     }        
