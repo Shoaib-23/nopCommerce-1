@@ -25,7 +25,18 @@ pipeline {
         }
         stage('make directory') {
             steps {
-                sh 'mkdir publish/bin publish/logs'
+                script {
+                    // Check if directories exist before creating
+                    if (!fileExists('publish/bin')) {
+                        sh 'mkdir publish/bin'
+                    }
+                    if (!fileExists('publish/logs')) {
+                        sh 'mkdir publish/logs'
+                    }
+                    // Create a new file with a unique name
+                    def uniqueFileName = "newFile_${UUID.randomUUID()}.txt"
+                    writeFile(file: "publish/logs/${uniqueFileName}", text: "This is a new file.")
+                }
             }
         }
         stage('create zip') {
@@ -39,4 +50,8 @@ pipeline {
             }
         }
     }
+}
+
+def fileExists(filePath) {
+    return file(filePath).exists()
 }
